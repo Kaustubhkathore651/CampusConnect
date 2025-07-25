@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - CampusConnect</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="logo.png" alt="CampusConnect Logo" class="logo" />
+      <h1>CampusConnect</h1>
+      <div class="menu-toggle" onclick="toggleMobileMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="create-event.html">Create Event</a>
+        <a href="my-events.html">My Events</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <span id="user-icon"></span>
+    </div>
+  </header>
+
+  <div class="container login-container">
+    <h2>Login</h2>
+    <form onsubmit="handleLogin(event)">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <div class="box">
+        <button type="submit" class="login-btn" id="login-btn">
+          <span>🔊 LOGIN ❤️</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <footer>&copy; 2025 CampusConnect. All rights reserved.</footer>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (email === "" || password === "") {
+        shiftButton();
+        return;
+      }
+
+      localStorage.setItem("loggedIn", true);
+      localStorage.setItem("user", email);
+      alert("Login successful!");
+      window.location.href = "index.html";
+    }
+
+    function shiftButton() {
+      const btn = document.querySelector('#login-btn');
+      const positions = ['shift-left', 'shift-top', 'shift-right', 'shift-bottom'];
+      const currentPosition = positions.find(pos => btn.classList.contains(pos));
+      const nextPosition = positions[
+        (positions.indexOf(currentPosition) + 1) % positions.length
+      ];
+
+      if (currentPosition) btn.classList.remove(currentPosition);
+      btn.classList.add(nextPosition);
+    }
+
+    function toggleMobileMenu() {
+      const nav = document.querySelector(".nav-links");
+      nav.classList.toggle("open");
+    }
+    // ✅ Redirect to home if already logged in
+if (localStorage.getItem("loggedIn")) {
+  window.location.href = "index.html";
+}
+
+  </script>
+</body>
+</html>
